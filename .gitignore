@@ -1,0 +1,13 @@
+.env
+__pycache__/
+*.pyc
+.ipynb_checkpoints/
+app/__pycache__/
+notebooks/.ipynb_checkpoints/
+
+# database
+*.db
+instance/
+
+# VS Code
+.vscode/
