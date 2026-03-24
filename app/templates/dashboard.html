@@ -1,0 +1,157 @@
+{% extends "base.html" %}  
+  
+{% block title %}Dashboard | Inventory Restocking System{% endblock %}  
+  
+{% block content %}  
+<div class="page-hero">  
+    <h1 class="page-title">Dashboard</h1>  
+    <p class="page-subtitle">  
+        Monitor stock levels, historical activity, and intelligent restocking insights from one place.  
+    </p>  
+</div>  
+
+<div class="row g-4 mb-4">  
+    <div class="col-md-6 col-xl-3">  
+        <div class="summary-card">  
+            <div class="card-icon icon-green">
+                <i class="fa-solid fa-box"></i>
+            </div>
+
+            <div class="summary-label">Total Products</div>  
+            <div class="summary-value">{{ total_products }}</div>  
+        </div>  
+    </div>  
+  
+    <div class="col-md-6 col-xl-3">  
+        <div class="summary-card">
+
+            <div class="card-icon icon-blue">
+                <i class="fa-solid fa-warehouse"></i>
+            </div>
+
+            <div class="summary-label">Inventory Records</div>  
+            <div class="summary-value">{{ total_stock_items }}</div>  
+        </div>  
+    </div>  
+  
+    <div class="col-md-6 col-xl-3">  
+        <div class="summary-card">  
+            <div class="card-icon icon-purple">
+                <i class="fa-solid fa-chart-line"></i>
+            </div>
+
+            <div class="summary-label">Sales Rows</div>  
+            <div class="summary-value">{{ total_sales_rows }}</div>  
+        </div>  
+    </div>  
+  
+    <div class="col-md-6 col-xl-3">  
+        <div class="summary-card restock-card">  
+
+            <div class="card-icon icon-red">
+                <i class="fa-solid fa-exclamation-triangle"></i>
+            </div>
+
+            <div class="summary-label">Restock Needed</div>  
+            <div class="summary-value">{{ restock_needed_count }}</div>  
+            
+            <!-- Hover popup -->
+            <div class="restock-tooltip">
+                {% if restock_products %}
+                    <strong>Products to Restock:</strong>
+                    <ul>
+                        {% for product in restock_products %}
+                            <li>{{ product }}</li>
+                        {% endfor %}
+                    </ul>
+                    
+                {% else %}
+                    <p>No products need restocking</p>
+                {% endif %}
+          
+            </div>  
+        </div>
+    </div>  
+</div>  
+  
+<div class="row g-4 mb-4">  
+    <div class="col-md-6">  
+        <div class="summary-card"> 
+
+            <div class="card-icon icon-pink">
+                <i class="fas fa-brain"></i>
+            </div>
+
+            <div class="summary-label">Highest Predicted Demand</div>  
+            <div class="summary-value small-value">  
+                {% if highest_demand_product %}  
+                    {{ highest_demand_product }} ({{ "%.2f"|format(highest_demand_value) }})  
+                {% else %}  
+                    No forecast yet  
+                {% endif %}  
+            </div>  
+        </div>  
+    </div>  
+  
+    <div class="col-md-6">  
+        <div class="summary-card">  
+
+            <div class="card-icon icon-orange">
+                <i class="fa-solid fa-box-open"></i>
+            </div>
+
+            <div class="summary-label">Lowest Stock Product</div>  
+            <div class="summary-value small-value">  
+                {% if lowest_stock_product %}  
+                    {{ lowest_stock_product }} ({{ lowest_stock_value }})  
+                {% else %}  
+                    No stock data  
+                {% endif %}  
+            </div>  
+        </div>  
+    </div>  
+</div>  
+  
+<div class="content-card">  
+    <div class="card-body p-4">  
+        <h4 class="mb-3">Recent Restock Activity</h4>  
+  
+        {% if recent_activity %}  
+            <div class="table-responsive">  
+                <table class="table align-middle">  
+                    <thead>  
+                        <tr>  
+                            <th>Product</th>  
+                            <th>Inventory</th>  
+                            <th>Predicted Demand</th>  
+                            <th>Restock Needed</th>  
+                            <th>Restock Qty</th>  
+                            <th>Created At</th>  
+                        </tr>  
+                    </thead>  
+                    <tbody>  
+                        {% for item in recent_activity %}  
+                        <tr>  
+                            <td>{{ item.product_name }}</td>  
+                            <td>{{ item.current_inventory }}</td>  
+                            <td>{{ "%.2f"|format(item.predicted_demand) }}</td>  
+                            <td>  
+                                {% if item.restock_needed %}  
+                                    <span class="badge bg-danger">Yes</span>  
+                                {% else %}  
+                                    <span class="badge bg-success">No</span>  
+                                {% endif %}  
+                            </td>  
+                            <td>{{ item.restock_quantity }}</td>  
+                            <td>{{ item.created_at }}</td>  
+                        </tr>  
+                        {% endfor %}  
+                    </tbody>  
+                </table>  
+            </div>  
+        {% else %}  
+            <p class="text-muted mb-0">No recent restock activity available yet.</p>  
+        {% endif %}  
+    </div>  
+</div>  
+{% endblock %}  

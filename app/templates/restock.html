@@ -1,0 +1,92 @@
+{% extends "base.html" %}
+
+{% block title %}Restocking | Inventory Restocking System{% endblock %}
+
+{% block content %}
+<div class="page-hero">
+    <h1 class="page-title">Restocking Recommendations</h1>
+    <p class="page-subtitle">
+        Select a product and let the system generate a restocking recommendation automatically from historical sales data.
+    </p>
+</div>
+
+<div class="row g-4">
+    <div class="col-xl-4">
+        <div class="content-card">
+            <div class="card-body p-4">
+                <h4 class="mb-3">Generate Recommendation</h4>
+
+                <form id="restockForm">
+                    <div class="mb-4">
+                        <label class="form-label">Product</label>
+                        <select id="restockProduct" class="form-select" required>
+                            <option value="">Select product</option>
+                        </select>
+                    </div>
+
+                    <button type="submit" class="btn btn-primary w-100">
+                        Generate Recommendation
+                    </button>
+                </form>
+
+                <div id="restockMessage" class="mt-3"></div>
+            </div>
+        </div>
+    </div>
+
+    <div class="col-xl-8">
+        <div class="content-card mb-4">
+            <div class="card-body p-4">
+                <h4 class="mb-3">Recommendation Result</h4>
+
+                <div id="resultCard" class="result-placeholder">
+                    <p class="text-muted mb-0">
+                        No recommendation generated yet. Select a product and click generate.
+                    </p>
+                </div>
+            </div>
+        </div>
+
+        <div class="content-card">
+            <div class="card-body p-4">
+                <div class="d-flex justify-content-between align-items-center mb-3 flex-wrap gap-2">
+                    <h4 class="mb-0">Recent Restock History</h4>
+                    <input
+                        type="text"
+                        id="historySearch"
+                        class="form-control w-auto"
+                        placeholder="Search history..."
+                        style="min-width: 240px;"
+                    >
+                </div>
+
+                <div class="table-responsive">
+                    <table class="table align-middle">
+                        <thead>
+                            <tr>
+                                <th>Product</th>
+                                <th>Inventory</th>
+                                <th>Predicted Demand</th>
+                                <th>Restock Needed</th>
+                                <th>Restock Qty</th>
+                                <th>Created At</th>
+                            </tr>
+                        </thead>
+                        <tbody id="historyTableBody">
+                            <tr>
+                                <td colspan="6" class="text-center text-muted">
+                                    Loading restock history...
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}
+
+{% block extra_js %}
+<script src="{{ url_for('static', filename='js/restock.js') }}"></script>
+{% endblock %}

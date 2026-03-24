@@ -1,0 +1,55 @@
+{% extends "base.html" %}
+
+{% block title %}Demand Forecast | Inventory Restocking System{% endblock %}
+
+{% block content %}
+<div class="page-hero">
+    <h1 class="page-title">Demand Forecast</h1>
+    <p class="page-subtitle">
+        Select a product and let the system compute the forecast automatically from historical sales data.
+    </p>
+</div>
+
+<div class="row g-4">
+    <div class="col-xl-4">
+        <div class="content-card">
+            <div class="card-body p-4">
+                <h4 class="mb-3">Predict Demand</h4>
+
+                <form id="forecastForm">
+                    <div class="mb-4">
+                        <label class="form-label">Product</label>
+                        <select id="forecastProduct" class="form-select" required>
+                            <option value="">Select product</option>
+                        </select>
+                    </div>
+
+                    <button type="submit" class="btn btn-primary w-100">
+                        Predict Demand
+                    </button>
+                </form>
+
+                <div id="forecastMessage" class="mt-3"></div>
+            </div>
+        </div>
+    </div>
+
+    <div class="col-xl-8">
+        <div class="content-card">
+            <div class="card-body p-4">
+                <h4 class="mb-3">Forecast Result</h4>
+
+                <div id="forecastResult" class="result-placeholder">
+                    <p class="text-muted mb-0">
+                        No demand forecast yet. Select a product and click predict.
+                    </p>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}
+
+{% block extra_js %}
+<script src="{{ url_for('static', filename='js/forecast.js') }}"></script>
+{% endblock %}

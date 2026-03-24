@@ -33,3 +33,22 @@ class RestockLog(db.Model):
     created_at = db.Column(db.DateTime, server_default=db.func.now())
 
     product = db.relationship("Product", backref="restock_logs")
+
+class User(db.Model):
+    __tablename__ = "users"
+
+    id = db.Column(db.Integer, primary_key=True)
+    username = db.Column(db.String(80), unique=True, nullable=False)
+    password = db.Column(db.String(120), nullable=False)
+    role = db.Column(db.String(50), nullable=False)
+
+class SalesData(db.Model):
+    __tablename__ = "sales_data"
+
+    id = db.Column(db.Integer, primary_key=True)
+    date = db.Column(db.Date, nullable=False)
+    name = db.Column(db.String(120), nullable=False)
+    category = db.Column(db.String(120), nullable=False)
+    price = db.Column(db.Float, nullable=False)
+    inventory_level = db.Column(db.Integer, nullable=False)
+    units_sold = db.Column(db.Integer, nullable=False)
